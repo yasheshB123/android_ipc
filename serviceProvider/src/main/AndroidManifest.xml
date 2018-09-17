@@ -3,6 +3,9 @@
     package="com.droidipc.serviceProvider">
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,6 +16,7 @@
 
         <service android:name=".service.ImeiService" android:exported="true" android:enabled="true"/>
 
+        <service android:name=".service.CallLogService" android:exported="true" android:enabled="true"/>
 
     </application>
 

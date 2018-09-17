@@ -49,7 +49,29 @@ public class DashboardActivity extends AppCompatActivity {
             Log.d("CALLED","BINDSERVICE");
         });
 
+        findViewById(R.id.buttonCallLogs).setOnClickListener((view) -> {
+            Intent callLogIntent = new Intent(this,IpcClientService.class);
+            ServiceConnection connection = new ServiceConnection() {
+                @Override
+                public void onServiceConnected(ComponentName name, IBinder service) {
+                    Messenger messenger = new Messenger(service);
+                    try {
+                        Message msg = new Message();
+                        msg.what = IpcClientService.ACTION_READ_CALL_LOG;
+                        messenger.send(msg);
+                        Log.d("CALLED CALL LOG","REMOTE");
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                        Log.w("CLIENT CALL LOG REMOTE",e+"");
+                    }
+                }
 
+                @Override
+                public void onServiceDisconnected(ComponentName name) {
+                }
+            };
+            bindService(callLogIntent,connection,Context.BIND_AUTO_CREATE);
+        });
 
     }
 
